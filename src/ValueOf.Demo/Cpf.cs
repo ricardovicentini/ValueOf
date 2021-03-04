@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ValueOf.Demo.Exceptions;
 using ValueOfLib;
 
@@ -10,16 +11,17 @@ namespace ValueOf.Demo
         static int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 
         public Cpf(string cpf)
-            : base(Cpf.RemoverNaoNumericos(cpf))
+            : base(cpf.RemoverNaoNumericos())
         { }
 
-        private static string RemoverNaoNumericos(string cpf)
-            => string.Join("", cpf.Where(c => char.IsDigit(c)).Select(c => c));
+
+
+        
 
         protected override bool Equals(Cpf obj)
-            => Value == obj;
+            => Value == obj.Value;
 
-        protected override void Validate()
+        protected override bool Validate()
         {
             string tempCpf;
             string digito;
@@ -61,6 +63,8 @@ namespace ValueOf.Demo
 
             if (!Value.EndsWith(digito))
                 throw new CpfInvalidoException();
+
+            return true;
         }
     }
 }

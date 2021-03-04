@@ -13,10 +13,12 @@ namespace ValueOf.Demo
         protected override bool Equals(Temperatura obj)
             => Value.Celsius == obj.Value.Celsius;
 
-        protected override void Validate()
+        protected override bool Validate()
         {
             if(Value.Celsius < -273.15)
                 throw new CelsiusMinimoExcedidoException();
+
+            return true;
         }
     }
 }
